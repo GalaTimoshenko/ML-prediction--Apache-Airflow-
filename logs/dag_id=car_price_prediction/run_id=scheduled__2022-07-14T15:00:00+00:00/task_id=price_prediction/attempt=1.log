@@ -1,0 +1,40 @@
+[2023-03-22T16:58:14.200+0300] {taskinstance.py:1084} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: car_price_prediction.price_prediction scheduled__2022-07-14T15:00:00+00:00 [queued]>
+[2023-03-22T16:58:14.214+0300] {taskinstance.py:1084} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: car_price_prediction.price_prediction scheduled__2022-07-14T15:00:00+00:00 [queued]>
+[2023-03-22T16:58:14.214+0300] {taskinstance.py:1282} INFO - 
+--------------------------------------------------------------------------------
+[2023-03-22T16:58:14.214+0300] {taskinstance.py:1283} INFO - Starting attempt 1 of 2
+[2023-03-22T16:58:14.214+0300] {taskinstance.py:1284} INFO - 
+--------------------------------------------------------------------------------
+[2023-03-22T16:58:14.230+0300] {taskinstance.py:1303} INFO - Executing <Task(PythonOperator): price_prediction> on 2022-07-14 15:00:00+00:00
+[2023-03-22T16:58:14.237+0300] {standard_task_runner.py:55} INFO - Started process 9801 to run task
+[2023-03-22T16:58:14.241+0300] {standard_task_runner.py:82} INFO - Running: ['airflow', 'tasks', 'run', 'car_price_prediction', 'price_prediction', 'scheduled__2022-07-14T15:00:00+00:00', '--job-id', '865', '--raw', '--subdir', 'DAGS_FOLDER/hw_dag.py', '--cfg-path', '/tmp/tmpr0ji9qar']
+[2023-03-22T16:58:14.244+0300] {standard_task_runner.py:83} INFO - Job 865: Subtask price_prediction
+[2023-03-22T16:58:14.359+0300] {task_command.py:388} INFO - Running <TaskInstance: car_price_prediction.price_prediction scheduled__2022-07-14T15:00:00+00:00 [running]> on host sgm-msi
+[2023-03-22T16:58:14.479+0300] {taskinstance.py:1509} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=airflow
+AIRFLOW_CTX_DAG_ID=car_price_prediction
+AIRFLOW_CTX_TASK_ID=price_prediction
+AIRFLOW_CTX_EXECUTION_DATE=2022-07-14T15:00:00+00:00
+AIRFLOW_CTX_TRY_NUMBER=1
+AIRFLOW_CTX_DAG_RUN_ID=scheduled__2022-07-14T15:00:00+00:00
+[2023-03-22T16:58:14.482+0300] {taskinstance.py:1775} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/sgm/.venv_airflow/lib/python3.9/site-packages/airflow/operators/python.py", line 175, in execute
+    return_value = self.execute_callable()
+  File "/home/sgm/.venv_airflow/lib/python3.9/site-packages/airflow/operators/python.py", line 192, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/home/sgm/airflow/dags/modules/predict.py", line 41, in predict
+    predictions = get_predicts()                                        # получаем предсказания для всех машин в тестовом наборе
+  File "/home/sgm/airflow/dags/modules/predict.py", line 28, in get_predicts
+    model = get_latest_model()                                      # получаем последнюю версию модели
+  File "/home/sgm/airflow/dags/modules/predict.py", line 20, in get_latest_model
+    model = dill.load(file)                                      #загружаем объект модели из файла с помощью модуля dill
+  File "/home/sgm/.venv_airflow/lib/python3.9/site-packages/dill/_dill.py", line 272, in load
+    return Unpickler(file, ignore=ignore, **kwds).load()
+  File "/home/sgm/.venv_airflow/lib/python3.9/site-packages/dill/_dill.py", line 419, in load
+    obj = StockUnpickler.load(self)
+EOFError: Ran out of input
+[2023-03-22T16:58:14.509+0300] {taskinstance.py:1321} INFO - Marking task as UP_FOR_RETRY. dag_id=car_price_prediction, task_id=price_prediction, execution_date=20220714T150000, start_date=20230322T135814, end_date=20230322T135814
+[2023-03-22T16:58:14.528+0300] {standard_task_runner.py:100} ERROR - Failed to execute job 865 for task price_prediction (Ran out of input; 9801)
+[2023-03-22T16:58:14.573+0300] {local_task_job.py:212} INFO - Task exited with return code 1
+[2023-03-22T16:58:14.599+0300] {taskinstance.py:2585} INFO - 0 downstream tasks scheduled from follow-on schedule check
